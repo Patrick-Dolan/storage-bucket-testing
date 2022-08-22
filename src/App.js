@@ -13,7 +13,7 @@ function App() {
     if (fileUpload == null) return null;
     // Get reference to fill path on storage bucket
     const fileRef = ref(storage, `files/${v4() + fileUpload.name}`);
-    // Upload the file
+    // Upload the file to storage bucket then add it to state
     uploadBytes(fileRef, fileUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         setFileList((prev) => [...prev, url]);
@@ -25,7 +25,7 @@ function App() {
     // Set fileListReference from storage bucket
     const fileListRef = ref(storage, "files/");
 
-    // Listall lists all files in path
+    // ListAll lists all files in reference path
     listAll(fileListRef).then((response) => {
       // Get all download urls from each item in response and add them to state
       response.items.forEach(item => {
